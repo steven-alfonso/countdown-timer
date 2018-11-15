@@ -1,0 +1,19 @@
+
+<div style="display: flex;">
+  <div class="section">
+    <h2>Time Segments</h2>
+    <button (click)="addTimeSegment()">ADD SEGMENT</button>
+    <div *ngFor="let timeSegment of timeSegments" class="time-segment" >
+      <input ng-model="[timeSegment]" (keyup)="updateSegmentInputValue(timeSegment.id, segmentSubtypes.Minutes, $event.target.value)"
+        placeholder="minutes:seconds" />
+    </div>
+  </div>
+  <div class="section">
+    <h2>Start Times</h2>
+    <div *ngFor="let startTime of serviceStartTimes" class="start-time-segment">
+      <span class="start-time-input-label">Start Time:</span>
+      <input ng-model="[startTime.startAsString]" value="{{startTime.startAsString}}" (keyup)="updateStartTime($event.target.value, startTime.id)" placeholder="Start Time" />
+      <h5 class="pre-service-start">Time to start pre-service: <span >{{ startTime.videoStart | date:'hh:mm:ss' }}</span></h5>
+    </div>
+  </div>
+</div>
