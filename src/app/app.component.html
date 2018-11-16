@@ -4,7 +4,7 @@
     <h2>Time Segments</h2>
     <button (click)="addTimeSegment()">ADD SEGMENT</button>
     <div *ngFor="let timeSegment of timeSegments" class="time-segment" >
-      <input ng-model="[timeSegment]" (keyup)="updateSegmentInputValue(timeSegment.id, segmentSubtypes.Minutes, $event.target.value)"
+      <input ng-model="[timeSegment]" (keyup)="updateSegmentInputValue(timeSegment.id, $event.target.value)"
         placeholder="minutes:seconds" />
     </div>
   </div>

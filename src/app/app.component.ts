@@ -45,7 +45,7 @@ export class AppComponent {
 
   }
 
-  updateSegmentInputValue(id: string, type: SegmentSubtypes, value: string | null) {
+  updateSegmentInputValue(id: string, value: string | null) {
     const splitVals = this.splitMinutesSeconds(value);
     const index = _.findIndex(this.timeSegments, { id: id });
     this.timeSegments[index].minutes = splitVals[0];
