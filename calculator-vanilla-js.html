@@ -193,13 +193,6 @@
       }
     }
 
-    updateStartTime(value, id) {
-      const splitVals = this.splitMinutesSeconds(value);
-      const stringVal = `${leftPad(splitVals[0], 2)}:${leftPad(splitVals[1], 2)}`;
-      find(this.serviceStartTimes, { id: id }).setStart(moment(stringVal, 'hh:mm'));
-      this.calculateVideoStartTimes();
-    }
-
     splitMinutesSeconds(value) {
       if (value.indexOf('.') >= 0) {
         return value.split('.').map((val) => {
@@ -214,6 +207,7 @@
       }
     }
   }
+  
   function leftPad(n, width, z = '0') {
     if (z === null || z === undefined) {
       z = '0';
