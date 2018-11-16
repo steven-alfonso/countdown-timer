@@ -12,6 +12,16 @@
     body {
       font-family: sans-serif;
     }
+    .main-container {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    @media only screen and (max-width: 700px) {
+      .main-container {
+        justify-content: center;
+      }
+    }
     .pre-service-start {
       margin-top: 8px;
       margin-bottom: 8px;
@@ -69,7 +79,7 @@
 
 <body>
 
-  <div style="display: flex;">
+  <div class="main-container">
     <div class="section" id="time_inputs">
       <h2>Time Segments</h2>
       <button onclick="addTimeSegment()">ADD SEGMENT</button>
