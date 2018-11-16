@@ -161,6 +161,7 @@
       let inputV = document.createElement('input');
       inputV.setAttribute('data-id', newSegment.id);
       inputV.setAttribute('placeholder', 'minutes:seconds');
+      inputV.setAttribute('pattern', '[0-9]{0,5}([:|.]{1}[0-9]{0,2})?');
       inputV.addEventListener('keyup', (event) => {
         this.updateSegmentInputValue(event.target.value, newSegment.id);
       });
@@ -210,6 +211,7 @@
         });
       } else if (value.indexOf(':') >= 0) {
         return value.split(':').map(val => {
+          console.log(parseInt(val.trim()));
           return parseInt(val.trim()) || 0;
         });
       } else {
