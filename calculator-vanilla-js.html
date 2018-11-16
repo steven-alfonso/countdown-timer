@@ -7,7 +7,6 @@
   <base href="/">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
   <style>
     body {
       font-family: sans-serif;
@@ -164,17 +163,17 @@
 
     addTimeSegment() {
       let newSegment = new TimeSegment(this.timeSegments.length)
-      let inputV = document.createElement('input');
-      inputV.setAttribute('data-id', newSegment.id);
-      inputV.setAttribute('placeholder', 'minutes:seconds');
-      inputV.setAttribute('pattern', '[0-9]{0,5}([:|.]{1}[0-9]{0,2})?');
-      inputV.addEventListener('keyup', (event) => {
+      let inputElement = document.createElement('input');
+      inputElement.setAttribute('data-id', newSegment.id);
+      inputElement.setAttribute('placeholder', 'minutes:seconds');
+      inputElement.setAttribute('pattern', '[0-9]{0,5}([:|.]{1}[0-9]{0,2})?');
+      inputElement.addEventListener('keyup', (event) => {
         this.updateSegmentInputValue(event.target.value, newSegment.id);
       });
       this.timeSegments = this.timeSegments.concat(newSegment);
       let childDiv = document.createElement('div');
       childDiv.classList.add('time-segment');
-      childDiv.appendChild(inputV);
+      childDiv.appendChild(inputElement);
       document.getElementById('time_inputs').appendChild(childDiv);
     }
 
@@ -216,7 +215,6 @@
         });
       } else if (value.indexOf(':') >= 0) {
         return value.split(':').map(val => {
-          console.log(parseInt(val.trim()));
           return parseInt(val.trim()) || 0;
         });
       } else {
