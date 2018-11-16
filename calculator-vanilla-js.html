@@ -133,29 +133,21 @@
     }
 
     renderStartTimes() {
-      var container = document.getElementById('start_times');
+      let container = document.getElementById('start_times');
       container.innerHTML = '';
 
       this.serviceStartTimes.forEach((startTime) => {
-        var mainDiv = document.createElement('div');
-        var header = document.createElement('span');
+        let mainDiv = document.createElement('div');
+        let header = document.createElement('span');
         header.classList.add('start-time-input-label');
         header.innerHTML = 'Start Time: ' + startTime.startAsString;
-        // var inputVal = document.createElement('span');
-        // inputVal.innerHTML = startTime.startAsString
-        // inputVal.setAttribute('value', startTime.startAsString);
-        // inputVal.addEventListener('keyup', (event) => {
-        //   this.updateStartTime(event.target.value, startTime.id);
-        // });
-        // inputVal.setAttribute('placeholder', 'Start Time');
-        var preServiceStart = document.createElement('h5');
+        let preServiceStart = document.createElement('h5');
         preServiceStart.classList.add('pre-service-start');
         preServiceStart.innerHTML = 'Time to start pre-service: ';
-        var preServiceStartSpan = document.createElement('span');
+        let preServiceStartSpan = document.createElement('span');
         preServiceStartSpan.innerHTML = startTime.videoStart === null ? startTime.start.format('hh:mm:ss') : startTime.videoStart.format('hh:mm:ss');
         preServiceStart.appendChild(preServiceStartSpan);
         mainDiv.appendChild(header);
-        // mainDiv.appendChild(inputVal);
         mainDiv.appendChild(preServiceStart)
         container.appendChild(mainDiv);
       });
@@ -192,8 +184,8 @@
     }
 
     updateSegmentInputValue(value, id) {
-      var splitVals = this.splitMinutesSeconds(value);
-      var index = findIndex(this.timeSegments, { id: id });
+      const splitVals = this.splitMinutesSeconds(value);
+      const index = findIndex(this.timeSegments, { id: id });
       if (index >= 0) {
         this.timeSegments[index].minutes = splitVals[0];
         this.timeSegments[index].seconds = splitVals[1];
@@ -232,14 +224,14 @@
 
   function generateGuid() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+      let r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
       return v.toString(16);
     });
   };
 
   function findIndex(arr, query) {
-    for (var i = 0; i < arr.length; i++) {
-      for (var property in query) {
+    for (let i = 0; i < arr.length; i++) {
+      for (let property in query) {
         if (query.hasOwnProperty(property)) {
           if (arr[i][property] !== query[property]) {
             break;
@@ -252,8 +244,8 @@
   }
 
   function find(arr, query) {
-    for (var i = 0; i < arr.length; i++) {
-      for (var property in query) {
+    for (let i = 0; i < arr.length; i++) {
+      for (let property in query) {
         if (query.hasOwnProperty(property)) {
           if (arr[i][property] !== query[property]) {
             break;
@@ -265,7 +257,7 @@
     return null;
   }
 
-  var c = new Calculator();
+  let c = new Calculator();
   addTimeSegment = c.addTimeSegment.bind(c);
 </script>
 
