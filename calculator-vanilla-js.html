@@ -90,7 +90,6 @@
     </div>
   </div>
 </body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 <script type="text/javascript">
   class TimeSegment {
     constructor(order) {
@@ -107,7 +106,6 @@
       this.start = null;
       this.id = generateGuid();
       this.setStart(start);
-      this.startAsString = start.format('hh:mm');
       this.videoStart = null;
     }
 
@@ -117,10 +115,11 @@
   }
 
   // Add or update times here
+  let startD = new Date();
   let _serviceStartTimes = [
-    new ServiceStart(moment('18:00', 'hh:mm')),
-    new ServiceStart(moment('09:30', 'hh:mm')),
-    new ServiceStart(moment('11:05', 'hh:mm')),
+    new ServiceStart(new Date(startD.setHours(18, 0, 0))),
+    new ServiceStart(new Date(startD.setHours(9, 30, 0))),
+    new ServiceStart(new Date(startD.setHours(11, 05, 0))),
   ];
 
   class Calculator {
@@ -140,12 +139,12 @@
         let mainDiv = document.createElement('div');
         let header = document.createElement('span');
         header.classList.add('start-time-input-label');
-        header.innerHTML = 'Start Time: ' + startTime.startAsString;
+        header.innerHTML = 'Start Time: ' + hmTime(startTime.start);
         let preServiceStart = document.createElement('h5');
         preServiceStart.classList.add('pre-service-start');
         preServiceStart.innerHTML = 'Time to start pre-service: ';
         let preServiceStartSpan = document.createElement('span');
-        preServiceStartSpan.innerHTML = startTime.videoStart === null ? startTime.start.format('hh:mm:ss') : startTime.videoStart.format('hh:mm:ss');
+        preServiceStartSpan.innerHTML = startTime.videoStart === null ? hmsTime(startTime.start) : hmsTime(startTime.videoStart);
         preServiceStart.appendChild(preServiceStartSpan);
         mainDiv.appendChild(header);
         mainDiv.appendChild(preServiceStart)
@@ -172,10 +171,10 @@
     calculateVideoStartTimes() {
       this.serviceStartTimes.forEach((serviceStart) => {
         if (serviceStart) {
-          let s = serviceStart.start.clone();
+          let s = new Date(serviceStart.start.getTime());
           this.timeSegments.forEach(timeSegment => {
-            s = s.subtract(timeSegment.minutes, 'minutes');
-            s = s.subtract(timeSegment.seconds, 'seconds');
+            s = timeSubtract(s, timeSegment.minutes, 'minutes');
+            s = timeSubtract(s, timeSegment.seconds, 'seconds');
           });
           serviceStart.videoStart = s;
         }
@@ -207,7 +206,7 @@
       }
     }
   }
-  
+
   function leftPad(n, width, z = '0') {
     if (z === null || z === undefined) {
       z = '0';
@@ -249,6 +248,35 @@
       }
     }
     return null;
+  }
+
+  function timeSubtract(date, amount, unit) {
+    switch (unit) {
+      case 'milliseconds':
+        return new Date(date.getTime() - amount);
+      case 'seconds':
+        return new Date(date.getTime() - (amount * 1000));
+      case 'minutes':
+        return new Date(date.getTime() - (amount * 1000 * 60));
+    }
+  }
+
+  function hmsTime(date) {
+    let hours = date.getHours();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    if (ampm === 'PM') {
+      hours -= 12;
+    }
+    return leftPad(hours, 2) + ':' + leftPad(date.getMinutes(), 2) + ':' + leftPad(date.getSeconds(), 2) + ampm;
+  }
+
+  function hmTime(date) {
+    let hours = date.getHours();
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    if (ampm === 'PM') {
+      hours -= 12;
+    }
+    return leftPad(hours, 2) + ':' + leftPad(date.getMinutes(), 2) + ampm;
   }
 
   let c = new Calculator();
